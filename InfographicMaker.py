@@ -16,7 +16,7 @@ Function = RotMG Infographic Maker. HAS ONLY BEEN TESTED ON WINDOWS 10.
 class Config:
     #class for managing config/options
     def __init__(self):
-        self.file = os.path.dirname(os.path.realpath(__file__)) + '\\config.txt'
+        self.file = os.path.dirname(os.path.realpath(__file__)) + '//config.txt'
 
     #extra, might use later
     def getFullConfig(self):
@@ -64,7 +64,7 @@ def genDict(f):
 def loadDungeons():
     global dungeons, dungeonNames
     try:
-        with open(mainPath + '\\dungeons.txt', 'r', encoding = 'utf-8') as f:
+        with open(mainPath + '//dungeons.txt', 'r', encoding = 'utf-8') as f:
             dungeons = genDict(f.read())
         dungeonNames = sorted(dungeons.keys())
     except Exception as e:
@@ -75,30 +75,30 @@ def loadDicts():
     global itemDicts, itemDict, manualSort
     try:
         if manualSort == True:    raise Exception('Manual sort is on.')
-        for dictFile in os.listdir(mainPath + '\\Dictionaries'):
+        for dictFile in os.listdir(mainPath + '//Dictionaries'):
             #index finding
             index = ''
-            if '!' not in dictFile:    raise ValueError('{} is missing \"!\" indicator for priority sorting.'.format(dictFile))
+            if '!' not in dictFile:    raise ValueError('{} is missing /"!/" indicator for priority sorting.'.format(dictFile))
             for char in dictFile:
                 if char == '!':    break
                 index = index + char
-            if not index.isdigit():    raise ValueError('{} has invalid characters before \"!\" indicator.'.format(dictFile))
+            if not index.isdigit():    raise ValueError('{} has invalid characters before /"!/" indicator.'.format(dictFile))
             index = int(index) - 1
 
             #dict defining
             itemDict = {}
-            with open(mainPath + '\\Dictionaries\\' + dictFile, 'r', encoding = "utf-8") as f:
+            with open(mainPath + '//Dictionaries//' + dictFile, 'r', encoding = "utf-8") as f:
                 itemDict = genDict(f.read())
                 itemDicts[index] = itemDict
     except Exception as e:
         manualSort = True
-        messagebox.showerror('Error', 'Dictionary Error: ' + str(e) + '\n\nUsing manual sorting.')
+        messagebox.showerror('Error', 'Dictionary Error: ' + str(e) + '/n/nUsing manual sorting.')
 
 def genInfographic():
     #instructions
-    if startTexts[0].get('1.0', 'end') == "Press 'Go!' for instructions.\n":
+    if startTexts[0].get('1.0', 'end') == "Press 'Go!' for instructions./n":
         messagebox.showinfo('Instructions',
-            "1. Choose a dungeon with the drop-down menu or type it.\n2. Input a background link where prompted, or leave it blank\n    for an empty background.\n3. Type or paste the name of each item that you want\n    displayed. Spelling counts, if you can't figure out the\n    correct spelling, see the dictionaries folder for a list of all\n    valid keys.\n4. The '+' amd '-' buttons alter the amount of infographics\n    generated. You can have up to 4 at once.\n5. Once all items are inputted and all desired fields are\n    fulfilled, press 'Go!' to choose a folder to save to and\n    generate the infographic.\n6. For instructions on priority sorting and options, see the\n    readme file.")
+            "1. Choose a dungeon with the drop-down menu or type it./n2. Input a background link where prompted, or leave it blank/n    for an empty background./n3. Type or paste the name of each item that you want/n    displayed. Spelling counts, if you can't figure out the/n    correct spelling, see the dictionaries folder for a list of all/n    valid keys./n4. The '+' amd '-' buttons alter the amount of infographics/n    generated. You can have up to 4 at once./n5. Once all items are inputted and all desired fields are/n    fulfilled, press 'Go!' to choose a folder to save to and/n    generate the infographic./n6. For instructions on priority sorting and options, see the/n    readme file.")
         return
 
     #vars
@@ -113,8 +113,8 @@ def genInfographic():
     if manualSort:
         global itemDict
         itemDict = {}
-        for dictFile in os.listdir(mainPath + '\\Dictionaries'):
-            with open(mainPath + '\\Dictionaries\\' + dictFile, 'r', encoding = "utf-8") as f:
+        for dictFile in os.listdir(mainPath + '//Dictionaries'):
+            with open(mainPath + '//Dictionaries//' + dictFile, 'r', encoding = "utf-8") as f:
                 itemDict = {**itemDict, **(genDict(f.read()))}
     
     #get dungeons and items
@@ -144,7 +144,7 @@ def genInfographic():
     yaxis = (length * 60) + ((length - 1) * 10) + (rows * 40)# + 20 (was for signature)
 
     #image start
-    source = Image.new('RGBA', (xaxis, yaxis), (0, 0, 0, 0))
+    source = Image.new('RGBA', (xaxis, yaxis), (255, 255, 255, 0))
     draw = ImageDraw.Draw(source)
 
     #bg is currently disabled
@@ -204,11 +204,11 @@ def genInfographic():
             itemErrorText = ''
             for i in missingSet:
                 itemErrorText = itemErrorText + i + ', '
-            messagebox.showerror("Error", 'Item(s) missing at: ' + itemErrorText + '\n\nTo see all valid item keys see the Dictionaries folder.')
+            messagebox.showerror("Error", 'Item(s) missing at: ' + itemErrorText + '/n/nTo see all valid item keys see the Dictionaries folder.')
 
         #save dialog
         try:
-            finalPath = filedialog.asksaveasfilename(confirmoverwrite = True, initialdir = mainPath + '\\Infographics', initialfile = 'infographic.png', filetypes = [('PNG', '*.png')])
+            finalPath = filedialog.asksaveasfilename(confirmoverwrite = True, initialdir = mainPath + '//Infographics', initialfile = 'infographic.png', filetypes = [('PNG', '*.png')])
             if finalPath == '':
                 messagebox.showwarning("Warning", 'File not saved.')
                 return
@@ -456,15 +456,15 @@ if __name__ == '__main__':
 
     #dictionary reading
     try:
-        itemDicts = [None] * len(os.listdir(mainPath + '\\Dictionaries'))
+        itemDicts = [None] * len(os.listdir(mainPath + '//Dictionaries'))
     except Exception:
-        messagebox.showerror('Error', '\"Dictionaries\" folder not found.')
+        messagebox.showerror('Error', '/"Dictionaries/" folder not found.')
         exit()
 
     #font loading
     try:
-        normalFont = ImageFont.truetype(mainPath + '\calibrib.ttf', 26)
-        #smallFont = ImageFont.truetype(mainPath + '\calibrib.ttf', 12)
+        normalFont = ImageFont.truetype(mainPath + '/calibrib.ttf', 26)
+        #smallFont = ImageFont.truetype(mainPath + '/calibrib.ttf', 12)
     except:
         messagebox.showerror('Error', 'Font load error.')
 
